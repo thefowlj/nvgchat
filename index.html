@@ -1,0 +1,35 @@
+<!doctype html>
+<html>
+  <head>
+    <title>NVG Chat</title>
+    <link href='http://fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'>
+    <link href='css/nvgchat.css' rel='stylesheet' type='text/css'/>
+  </head>
+  <body>
+    <div id='initial' class='initial'>
+      <div class='initialCenter'>
+        <p>
+          Enter a username<br/>
+        </p>
+        <p>
+          <form action='' id='username'>
+            <input class='usernameEnter' id='un' autofocus/>
+          </form>
+        </p>
+      </div>
+    </div>
+
+    <ul id="messages" style='display: none'></ul>
+    <form class='chatForm' action="" id='chatBox'>
+      <label id='chatUsername'></label>
+      <input class='button' type='submit' value='Send' style='float: right' />
+      <div style='overflow: hidden; padding-right: .5em;'>
+        <input class='chatInput' id="m" autocomplete="off" autofocus/>
+      </div>
+      <span id='chatUsername'></span>
+    </form>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="js/nvgchat.js"></script>
+  </body>
+</html>
