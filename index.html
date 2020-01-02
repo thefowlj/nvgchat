@@ -18,16 +18,18 @@
         </p>
       </div>
     </div>
-
-    <ul id="messages" style='display: none'></ul>
-    <form class='chatForm' action="" id='chatBox'>
-      <label id='chatUsername'></label>
-      <input class='button' type='submit' value='Send' style='float: right' />
-      <div style='overflow: hidden; padding-right: .5em;'>
-        <input class='chatInput' id="m" autocomplete="off" autofocus/>
-      </div>
-      <span id='chatUsername'></span>
-    </form>
+    <div class='container' id='messagesContainer'>
+      <top>
+        <ul id='messages'></ul>
+      </top>
+      <bottom>
+        <form class='chatForm' action="" id='chatBox'>
+          <label id='chatUsername'>Username</label>
+          <input class='chatInput' id="m" autocomplete="off" autofocus/>
+          <input class='button' type='submit' value='Send' />
+        </form>
+      </bottom>
+    </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="/socket.io/socket.io.js"></script>
     <script src="js/nvgchat.js"></script>
