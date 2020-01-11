@@ -45,12 +45,18 @@ $(document).ready(() => {
     $('#m').val('');
     return false;
   });
-  socket.on('chat message', function(msg){
+  socket.on('chat message', function(msg) {
     var msgText = msg.message;
     var color = msg.color;
     var uname = msg.uname;
     $('#messages').append(`<li><span style='color: ${color}'>${uname}: </span>${msgText}</li>`);
     $(document).scrollTop($(document).height());
+  });
+  socket.on('newUserConnected', function(uname) {
+    $('#messages').append(`<li>${uname} has entered the chat.</li>`);
+  });
+  socket.on('userDisconnected', function(uname) {
+    $('#messages').append(`<li>${uname} has left the chat.</li>`);
   });
 });
 

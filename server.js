@@ -15,6 +15,12 @@ const port = process.env.PORT;
 
 server.use(express.static('public'));
 
+// Ensure the databases are empty when server starts
+db.connect('db', ['currentUsers','messages']);
+db.currentUsers.remove();
+db.messages.remove();
+
+// Connect to db directory and create JSON files
 db.connect('db', ['currentUsers','messages']);
 
 server.get('/', (req, res) => {
@@ -22,6 +28,7 @@ server.get('/', (req, res) => {
 });
 
 io.on('connection', (socket) => {
+  let newUserId;
   console.log('a user connected');
   socket.on('chat message', (msg) => {
     console.log('message: ' + msg);
@@ -29,8 +36,15 @@ io.on('connection', (socket) => {
   });
   socket.on('newUser', (dataObj) => {
     newUser = db.currentUsers.save(dataObj);
-    console.log(newUser);
-    return newUser._id;
+    console.log(`${newUser.uname} created`);
+    newUserId = newUser._id;
+    io.emit('newUserConnected', newUser.uname);
+  });
+  socket.on('disconnect', (reason) => {
+    let uname = db.currentUsers.find({_id: newUserId})[0].uname;
+    console.log(`${uname} deleted`);
+    db.currentUsers.remove({_id: newUserId});
+    io.emit('userDisconnected', uname);
   });
 });
 
