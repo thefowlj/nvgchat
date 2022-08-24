@@ -4,9 +4,9 @@
   "description": "A chat application that is not very good",
   "main": "server.js",
   "dependencies": {
-    "diskdb": "^0.1.17",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "mongodb": "^4.9.0",
     "socket.io": "^2.3.0"
   },
   "devDependencies": {},

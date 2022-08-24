@@ -1,37 +1,40 @@
 <!doctype html>
 <html>
-  <head>
+
+<head>
     <title>NVG Chat</title>
     <link href='http://fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'>
-    <link href='css/nvgchat.css' rel='stylesheet' type='text/css'/>
-  </head>
-  <body>
+    <link href='css/nvgchat.css' rel='stylesheet' type='text/css' />
+</head>
+
+<body>
     <div id='initial' class='initial'>
-      <div class='initialCenter'>
-        <p>
-          Enter a username<br/>
-        </p>
-        <p>
-          <form action='' id='username'>
-            <input class='usernameEnter' id='un' autofocus/>
-          </form>
-        </p>
-      </div>
+        <div class='initialCenter'>
+            <p>
+                Enter a username<br />
+            </p>
+            <p>
+            <form action='' id='username'>
+                <input class='usernameEnter' id='un' autofocus />
+            </form>
+            </p>
+        </div>
     </div>
     <div class='container' id='messagesContainer'>
-      <top>
-        <ul id='messages'></ul>
-      </top>
-      <bottom>
-        <form class='chatForm' action="" id='chatBox'>
-          <label id='chatUsername'>Username</label>
-          <input class='chatInput' id="m" autocomplete="off" autofocus/>
-          <input class='button' type='submit' value='Send' />
-        </form>
-      </bottom>
+        <top>
+            <ul id='messages'></ul>
+        </top>
+        <bottom>
+            <form class='chatForm' action="" id='chatBox'>
+                <label id='chatUsername'>Username</label>
+                <input class='chatInput' id="m" autocomplete="off" autofocus />
+                <input class='button' type='submit' value='Send' />
+            </form>
+        </bottom>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="/socket.io/socket.io.js"></script>
     <script src="js/nvgchat.js"></script>
-  </body>
+</body>
+
 </html>
