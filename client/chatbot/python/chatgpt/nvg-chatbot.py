@@ -16,6 +16,7 @@ chatbot_username = os.getenv('CHATBOT_USERNAME') if os.getenv('CHATBOT_USERNAME'
 regex = f'^.*(chatbot_username)'
 uid = None
 openai.api_key = os.getenv('CHATGPT_API_KEY')
+un_color = '#000000'
 
 # Adapted from the OpenAPI example: https://platform.openai.com/examples/default-marv-sarcastic-chat
 default_prompt = f'{chatbot_username} is a chatbot that reluctantly answers questions with sarcastic responses'
@@ -28,7 +29,7 @@ sio = socketio.AsyncClient()
 @sio.event
 async def connect():
     print('connection established')
-    new_user = {'uname':chatbot_username, 'color':'#000000'}
+    new_user = {'uname':chatbot_username}
     await sio.emit('newUser', new_user)
 
 
@@ -50,7 +51,7 @@ async def chat_message(data):
         response = {
             'uid': uid,
             'uname': chatbot_username,
-            'color': '#000000', 
+            'color': un_color,
             'type': 'msg',
             'message': msg.choices[0].text
         }
@@ -61,6 +62,12 @@ async def chat_message(data):
 async def new_user_id(data):
     global uid
     uid = data
+
+
+@sio.on('newUserColor')
+async def new_user_color(data):
+    global un_color
+    un_color = data
 
 
 @sio.event
