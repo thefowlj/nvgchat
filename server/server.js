@@ -20,6 +20,7 @@ const http = require('http').createServer(server);
 const io = require('socket.io')(http);
 const dotenv = require('dotenv');
 const mongoUtil = require('./mongoUtil');
+const colors = require('./colors');
 
 dotenv.config();
 const port = process.env.PORT;
@@ -69,6 +70,12 @@ io.on('connection', (socket) => {
     socket.on('newUser', (dataObj) => {
         currentUsers.insertOne(dataObj, (err, res) => {
             if (err) throw err;
+
+            // send client a generated color if one is not specified
+            if (dataObj.color == undefined) {
+                dataObj.color = colors.getRandomHexColor();
+                socket.emit('newUserColor', dataObj.color);
+            }
             console.log(res);
             console.log(`${dataObj.uname} created`);
             newUserId = res.insertedId; // new user id created during mongodb insertion
