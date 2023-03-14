@@ -5,7 +5,6 @@
 
 import asyncio
 import socketio
-import re
 import openai
 from dotenv import load_dotenv
 import os
@@ -29,7 +28,16 @@ chatgpt_model = os.getenv('CHATGPT_MODEL') if os.getenv('CHATGPT_MODEL') != None
 sio = socketio.AsyncClient()
 
 
-def check_key(dic, key):
+def check_key(dic: dict, key: str):
+    """Check if a key exists in a dictionary
+
+    Args:
+        dic (dict): dictionary to check
+        key (str): key to check in dictionary
+
+    Returns:
+        bool: whether key exists in dictionary
+    """
     keys_list = list(dic.keys())
     output = False
     if keys_list.count(key) == 1:
@@ -45,7 +53,12 @@ async def connect():
 
 
 @sio.on('chat message')
-async def chat_message(data):
+async def chat_message(data: dict):
+    """Processes a NVG Chat WS message
+
+    Args:
+        data (dict): NVG Chat WS message JSON data
+    """
     global conversations
     global uid
     message = data['message']
@@ -82,25 +95,31 @@ async def chat_message(data):
 
 
 @sio.on('newUserId')
-async def new_user_id(data):
+async def new_user_id(data: str):
+    """Process WS newUserId sent from server on user connection
+
+    Args:
+        data (str): user id sent from server
+    """
     global uid
     uid = data
 
 
 @sio.on('newUserColor')
-async def new_user_color(data):
+async def new_user_color(data: str):
+    """Process WS newUserColor sent from server
+
+    Args:
+        data (str): hex color string
+    """
     global un_color
     un_color = data
 
 
 @sio.event
-async def my_message(data):
-    print('message received with ', data)
-    await sio.emit('my response', {'response': 'my response'})
-
-
-@sio.event
 async def disconnect():
+    """Process disconnect message from server
+    """
     print('disconnected from server')
 
 
