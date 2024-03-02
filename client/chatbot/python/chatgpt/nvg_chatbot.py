@@ -5,7 +5,7 @@
 
 import asyncio
 from typing import Dict
-import socketio
+import socketio # type: ignore
 import openai
 from dotenv import load_dotenv
 import os
