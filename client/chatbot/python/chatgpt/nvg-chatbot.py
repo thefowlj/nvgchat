@@ -4,6 +4,7 @@
 # This ChatGPT chatbot is a simple Python client example to be used with the NVG Chat server application.
 
 import asyncio
+from typing import Dict
 import socketio
 import openai
 from dotenv import load_dotenv
@@ -18,12 +19,12 @@ uid = None
 openai.api_key = os.getenv('CHATGPT_API_KEY')
 un_color = '#000000'
 conversational = bool(strtobool(os.getenv('CHATBOT_CONVERSATIONAL', 'False')))
-conversations = {}
+conversations: Dict[str, str] = {}
 
 # Adapted from the OpenAPI example: https://platform.openai.com/examples/default-marv-sarcastic-chat
 default_prompt = f'{chatbot_username} is a chatbot that reluctantly answers questions with sarcastic responses'
-chatbot_prompt = os.getenv('CHATBOT_PROMPT') if os.getenv('CHATBOT_PROMPT') != None else default_prompt
-chatgpt_model = os.getenv('CHATGPT_MODEL') if os.getenv('CHATGPT_MODEL') != None else 'text-davinci-003'
+chatbot_prompt = os.getenv('CHATBOT_PROMPT') if os.getenv('CHATBOT_PROMPT') is not None else default_prompt
+chatgpt_model = os.getenv('CHATGPT_MODEL') if os.getenv('CHATGPT_MODEL') is not None else 'text-davinci-003'
 
 sio = socketio.AsyncClient()
 
@@ -62,7 +63,6 @@ async def chat_message(data: dict):
     global conversations
     global uid
     message = data['message']
-    query = ''
     if (chatbot_username in message or (conversational and check_key(conversations, data['uid']))) and data['type'] == 'msg' and data['uid'] != uid:
         if not(check_key(conversations, data['uid'])) and conversational:
             prompt = f'{chatbot_prompt}:\n\nYou: {message}\n{chatbot_username}:'
